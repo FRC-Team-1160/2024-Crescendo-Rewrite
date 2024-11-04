@@ -2,31 +2,24 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems;
-
-import com.revrobotics.CANSparkLowLevel;
-import com.revrobotics.CANSparkMax;
+package frc.robot.subsystems.Climber;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.ClimberConstants;
-import frc.robot.Constants.Ports;
 
-public class IntakeRealIO extends Intake {
+public class ClimberSimIO extends Climber {
 
-  private DoubleSolenoid m_solenoid;
-  
-  public CANSparkMax m_feed_motor;  
+  public static ClimberRealIO m_instance;
 
+  public DIOSim l_limit, r_limit;
 
   /** Creates a new ExampleSubsystem. */
-  public IntakeRealIO() {
-    m_solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
-    m_feed_motor = new CANSparkMax(Ports.INTAKE_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
+  public ClimberSimIO() {
+
   }
 
   /**
@@ -35,13 +28,22 @@ public class IntakeRealIO extends Intake {
    * @return a command
    */
 
-  public void setSolenoid(DoubleSolenoid.Value state){
-    m_solenoid.set(state);
+  public void setLeftMotor(double speed){
+
   }
 
-  public void setWheels(double volts){
-    m_feed_motor.set(volts);
+  public void setRightMotor(double speed){
+
   }
+
+  public boolean getLeftSwitch(){ //FIX (maybe)
+    return false;
+  }
+
+  public boolean getRightSwitch(){ 
+    return false;
+  }
+
 
   @Override
   public void periodic() {
