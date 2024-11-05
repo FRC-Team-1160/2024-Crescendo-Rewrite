@@ -27,6 +27,10 @@ public class DriveTrainRealIO extends DriveTrain {
   
   }
 
+  public SwerveModule initializeModule(){
+    return new SwerveModuleRealIO();
+  }
+
   public Rotation2d getGyroAngle(){
     return Rotation2d.fromDegrees(-m_gyro.getAngle()); //gyro reports CW positive, negate to return CCW positive
   }

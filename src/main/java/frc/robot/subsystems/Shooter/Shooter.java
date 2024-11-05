@@ -17,20 +17,7 @@ import frc.robot.Constants.TransportConstants;
 
 public abstract class Shooter extends SubsystemBase {
 
-  public static Shooter m_instance;
-
   public PIDController pitch_pid;
-
-  public static Shooter getInstance(){
-    if (m_instance == null){
-      if (Robot.isSimulation()){
-        //m_instance = new ClimberSimIO();
-      } else {
-        m_instance = new ShooterRealIO();
-      }
-    }
-    return m_instance;
-  }
 
   public Shooter(){
     pitch_pid = new PIDController(3.5, 50.0, 0); //MOVE TO CONSTANTS

@@ -12,19 +12,6 @@ import frc.robot.Constants.ClimberConstants;
 
 public abstract class Climber extends SubsystemBase {
 
-  public static Climber m_instance;
-
-  public static Climber getInstance(){
-    if (m_instance == null){
-      if (Robot.isSimulation()){
-        m_instance = new ClimberSimIO();
-      } else {
-        m_instance = new ClimberRealIO();
-      }
-    }
-    return m_instance;
-  }
-
   public Climber() {
 
   }

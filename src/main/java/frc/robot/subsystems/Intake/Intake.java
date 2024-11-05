@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems.Folder;
+package frc.robot.subsystems.Intake;
 
 import com.revrobotics.CANSparkMax;
 
@@ -16,20 +16,7 @@ import frc.robot.Constants.IntakeConstants;
 
 public abstract class Intake extends SubsystemBase {
 
-  public static Intake m_instance;
-
   public DoubleSolenoid.Value solenoid_default, solenoid_current;
-
-  public static Intake getInstance(){
-    if (m_instance == null){
-      if (Robot.isSimulation()){
-       // m_instance = new IntakeSimIO();
-      } else {
-        m_instance = new IntakeRealIO();
-      }
-    }
-    return m_instance;
-  }
 
   /** Creates a new ExampleSubsystem. */
   public Intake() {

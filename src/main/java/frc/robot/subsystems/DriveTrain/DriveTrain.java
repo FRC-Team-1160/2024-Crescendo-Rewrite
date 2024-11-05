@@ -25,22 +25,9 @@ import frc.robot.Constants.TransportConstants;
 
 public abstract class DriveTrain extends SubsystemBase {
 
-  public static DriveTrain m_instance;
-
   public SwerveModule[] m_modules;
 
   public SwerveDriveKinematics m_kinematics;
-
-  public static DriveTrain getInstance(){
-    if (m_instance == null){
-      if (Robot.isSimulation()){
-        //m_instance = new ClimberSimIO();
-      } else {
-        m_instance = new DriveTrainRealIO();
-      }
-    }
-    return m_instance;
-  }
 
   public DriveTrain(){
     double offset = 23.75 * 0.0254; //MOVE TO CONSTANTS
@@ -51,7 +38,14 @@ public abstract class DriveTrain extends SubsystemBase {
       new Translation2d(-offset, offset), //back left
       new Translation2d(-offset, -offset) //back right
     );
+
+    m_modules = new SwerveModule[4];
+    for (int i = 0; i < m_modules.length; i++){
+      m_modules[i] = initializeModule();
+    }
   }
+
+  abstract SwerveModule initializeModule();
 
   public void setSwerveDrive(double x_metersPerSecond, double y_metersPerSecond, double a_radiansPerSecond){
     //converts speeds from field's frame of reference to robot's frame of reference

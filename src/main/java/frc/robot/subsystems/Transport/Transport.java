@@ -15,32 +15,15 @@ import frc.robot.Constants.TransportConstants;
 
 public abstract class Transport extends SubsystemBase {
 
-  public static Transport m_instance;
-
   public boolean noteStored;
 
   public Timer color_refresh;
 
   public double prox;
 
-  public static Transport getInstance(){
-    if (m_instance == null){
-      if (Robot.isSimulation()){
-        //m_instance = new ClimberSimIO();
-      } else {
-        m_instance = new TransportRealIO();
-      }
-    }
-    return m_instance;
+  public Transport(){
+
   }
-
-  /** Creates a new ExampleSubsystem. */
-
-  /**
-   * Example command factory method.
-   *
-   * @return a command
-   */
 
 
   public void transportOn(){
