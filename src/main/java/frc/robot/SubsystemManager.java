@@ -1,5 +1,20 @@
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+
+import org.ejml.equation.Function;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.util.function.BooleanConsumer;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants.FieldConstants;
+import frc.robot.Constants.SwerveConstants;
 import frc.robot.subsystems.Climber.Climber;
 import frc.robot.subsystems.Climber.ClimberRealIO;
 import frc.robot.subsystems.DriveTrain.DriveTrain;
@@ -19,9 +34,30 @@ public class SubsystemManager {
     Shooter m_shooter;
     Climber m_climber;
 
-    
+    DriveState drive_state;
+    ShootState shoot_state;
+
+    Pose2d tracked_note;
+
+    PIDController drive_angle_pid;
+
+    Pose2d robot_pose;
+    SwerveDrivePoseEstimator m_pose_estimator;
+
+    enum DriveState {
+        FULL_CONTROL,
+        AIMING_SPEAKER,
+        AIMING_NOTE
+    }
+
+    enum ShootState {
+        OFF,
+        REV,
+        SHOOTING
+    }
 
     public SubsystemManager(){
+
         if (Robot.isSimulation()){
             
         } else {
@@ -31,8 +67,91 @@ public class SubsystemManager {
             m_shooter = new ShooterRealIO();
             m_climber = new ClimberRealIO();
         }
+
+        drive_state = DriveState.FULL_CONTROL;
+        shoot_state = ShootState.OFF;
+
+        drive_angle_pid = new PIDController(0.1, 0, 0); //GET CONSTANTS
+        drive_angle_pid.enableContinuousInput(-Math.PI, Math.PI);
+
+        robot_pose = new Pose2d();
+        m_pose_estimator = new SwerveDrivePoseEstimator(
+            m_drive.m_kinematics, 
+            m_drive.getGyroAngle(), 
+            m_drive.getModulePositions(), 
+            robot_pose);
+
     }
 
+    public void periodic(double stick_x, double stick_y, double stick_a){
 
+        robot_pose = m_pose_estimator.update(m_drive.getGyroAngle(), m_drive.getModulePositions());
 
+        double drive_x = stick_x * SwerveConstants.MAX_SPEED;
+        double drive_y = stick_y * SwerveConstants.MAX_SPEED;
+        double drive_a = stick_a;
+
+        switch(drive_state){
+            case AIMING_SPEAKER:
+                drive_angle_pid.setSetpoint(
+                    Math.atan2(
+                        FieldConstants.SPEAKER_Y - robot_pose.getY(), 
+                        FieldConstants.SPEAKER_X - robot_pose.getX()));
+                drive_a = drive_angle_pid.calculate(robot_pose.getRotation().getRadians());
+                break;
+
+            case AIMING_NOTE:
+                drive_angle_pid.setSetpoint(
+                    Math.atan2(
+                        tracked_note.getY() - robot_pose.getY(), 
+                        tracked_note.getX() - robot_pose.getX()));
+                drive_a = drive_angle_pid.calculate(robot_pose.getRotation().getRadians());
+                break;
+
+            case FULL_CONTROL:
+
+        }
+        m_drive.setSwerveDrive(drive_x, drive_y, drive_a);
+
+        switch(shoot_state){
+            case SHOOTING:
+            case REV:
+                double dist = Math.sqrt(
+                    Math.pow(FieldConstants.SPEAKER_Y - robot_pose.getY(), 2) +
+                    Math.pow(FieldConstants.SPEAKER_X - robot_pose.getX(), 2));
+                m_shooter.setSpeed(Math.min(3000 + 500 * dist, 5000));
+                break;
+            case OFF:
+                m_shooter.setSpeed(0);
+        }
+    }
+
+    public Command aimSpeakerCommand(){
+        return new FunctionalCommand(
+            () -> drive_state = DriveState.AIMING_SPEAKER, 
+            null, 
+            canceled -> {if (canceled) drive_state = DriveState.FULL_CONTROL;}, 
+            () -> drive_state != DriveState.AIMING_SPEAKER);
+    }
+
+    public Command aimNoteCommand(){
+        return new FunctionalCommand(
+            () -> {if (tracked_note != null) drive_state = DriveState.AIMING_NOTE;}, 
+            null,
+            canceled -> {if (canceled) drive_state = DriveState.FULL_CONTROL;}, 
+            () -> drive_state != DriveState.AIMING_NOTE || tracked_note == null);
+    }
+
+    public Command shootCommand(){
+        return new FunctionalCommand(
+            () -> {
+                shoot_state = ShootState.SHOOTING;
+                m_transport.transportOn();},
+            null, 
+            canceled -> {
+                if (canceled) shoot_state = ShootState.OFF;
+                m_transport.transportOff();}, 
+            () -> shoot_state != ShootState.SHOOTING)
+                .raceWith(new WaitCommand(1.0));
+    }
 }

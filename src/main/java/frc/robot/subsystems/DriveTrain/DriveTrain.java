@@ -7,11 +7,13 @@ package frc.robot.subsystems.DriveTrain;
 import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -40,12 +42,13 @@ public abstract class DriveTrain extends SubsystemBase {
     );
 
     m_modules = new SwerveModule[4];
-    for (int i = 0; i < m_modules.length; i++){
-      m_modules[i] = initializeModule();
-    }
+    m_modules[0] = initializeModule(1, 1, 1); // FIX PORTS
+    m_modules[1] = initializeModule(2, 2, 2);
+    m_modules[2] = initializeModule(3, 3, 3);
+    m_modules[3] = initializeModule(4, 4, 4);
   }
 
-  abstract SwerveModule initializeModule();
+  abstract SwerveModule initializeModule(int drive_port, int steer_port, int sensor_port);
 
   public void setSwerveDrive(double x_metersPerSecond, double y_metersPerSecond, double a_radiansPerSecond){
     //converts speeds from field's frame of reference to robot's frame of reference
@@ -96,13 +99,23 @@ public abstract class DriveTrain extends SubsystemBase {
     return new ChassisSpeeds((twist.dx / dt), (twist.dy / dt), (speeds.omegaRadiansPerSecond));
   }
 
-  abstract Rotation2d getGyroAngle();
+  public SwerveModulePosition[] getModulePositions(){
+    var positions = new SwerveModulePosition[m_modules.length];
+    for (int i = 0; i < m_modules.length; i++){
+      positions[i] = m_modules[i].getModulePosition();
+    }
+    return positions;
+  }
+
+
+  public abstract Rotation2d getGyroAngle();
 
   @Override
   public void periodic() {
     for (SwerveModule module : m_modules){
       module.update();
     }
+
   }
 
   @Override

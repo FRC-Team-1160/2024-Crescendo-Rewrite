@@ -37,6 +37,7 @@ public class ShooterRealIO extends Shooter {
   }
 
   private void configureTalons(){ //SETUP HELPER FUNCTION
+
     var configs = new Slot0Configs();
 
     configs.kP = 0.1; //MOVE TO CONSTANTS
@@ -52,6 +53,7 @@ public class ShooterRealIO extends Shooter {
 
     top_motor.setNeutralMode(NeutralModeValue.Coast);
     bottom_motor.setNeutralMode(NeutralModeValue.Coast);
+    
   }
 
   public void setTopSpeed(double rpm){

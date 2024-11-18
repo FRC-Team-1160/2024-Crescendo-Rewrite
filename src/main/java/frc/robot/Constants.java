@@ -14,13 +14,48 @@ package frc.robot;
  */
 public final class Constants {
 
+  public static class FieldConstants {
+    public static final double SPEAKER_Y = 0.0;
+    public static final double SPEAKER_X = 0.0;
+  }
+
   public static class RobotConstants {
     public static final double LOOP_TIME_SECONDS = 0.02;
   }
 
-  public static class OperatorConstants {
-    public static final int kDriverControllerPort = 0;
+  public static class IO {
+    public static final int MAIN_PORT = 0;
+    public static final int COPILOT_PORT = 1;
+    public static final int COPILOT_SIMP_PORT = 2;
+    public static final int LEFT_BOARD_PORT = 3;
+    public static final int RIGHT_BOARD_PORT = 4;
+
+    public static final class Board {
+      public static final class Left {
+        public static final int SHOOT = 1;
+        public static final int AIM = 2;
+
+        public static final int AMP = 3;
+
+        public static final int SHOOT_OVERRIDE = 5;
+        public static final int REV = 6;
+
+        public static final int LEFT_CLIMB = 0;
+      }
+      public static final class Right {
+        public static final int UP_DOWN_INTAKE = 1;
+        public static final int OVERRIDE = 4;
+        public static final int OUTTAKE = 9;
+        public static final int INTAKE = 8;
+
+        public static final int INC_OR_DEC_TAR = 3;
+        public static final int MOVE_TAR = 6;
+
+        public static final int RIGHT_CLIMB = 0;
+      }
+    }
   }
+
   public static class ClimberConstants {
     public static final double MOTOR_SPEED_VOLTS = 8.0;
   }

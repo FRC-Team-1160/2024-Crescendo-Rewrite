@@ -38,9 +38,9 @@ public abstract class SwerveModule {
   }
 
   public void update(){
-    double target_angle = target_state.angle.getRotations();
-    double a = angle_pid.calculate(getAngle().getRotations(), target_angle);
-    if (Math.abs(getAngle().getRotations() - target_angle) > 0.005){
+    double target_angle = target_state.angle.getRadians();
+    double a = angle_pid.calculate(getAngle().getRadians(), target_angle);
+    if (Math.abs(getAngle().getRadians() - target_angle) > 0.005){
         setSteer(-a);
     } else {
         setSteer(0);

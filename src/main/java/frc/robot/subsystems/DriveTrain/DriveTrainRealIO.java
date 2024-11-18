@@ -27,8 +27,8 @@ public class DriveTrainRealIO extends DriveTrain {
   
   }
 
-  public SwerveModule initializeModule(){
-    return new SwerveModuleRealIO();
+  public SwerveModule initializeModule(int drive_port, int steer_port, int sensor_port){
+    return new SwerveModuleRealIO(drive_port, steer_port, sensor_port);
   }
 
   public Rotation2d getGyroAngle(){
