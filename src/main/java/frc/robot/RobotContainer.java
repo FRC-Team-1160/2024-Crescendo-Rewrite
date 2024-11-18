@@ -39,7 +39,10 @@ public class RobotContainer {
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new JoystickButton(m_leftBoard, Constants.IO.Board.Left.AIM)
-        .whileTrue(null);
+        .whileTrue(m_subsystem_manager.aimSpeakerCommand());
+
+    new JoystickButton(m_leftBoard, Constants.IO.Board.Left.SHOOT)
+        .onTrue(m_subsystem_manager.shootCommand());
 
     new JoystickButton(m_rightBoard, Constants.IO.Board.Right.UP_DOWN_INTAKE)
         .onTrue(new InstantCommand(
@@ -49,6 +52,17 @@ public class RobotContainer {
 
     new JoystickButton(m_leftBoard, Constants.IO.Board.Left.AIM)
         .whileTrue(m_subsystem_manager.aimSpeakerCommand());
+
+    new JoystickButton(m_rightBoard, Constants.IO.Board.Right.INTAKE)
+        .toggleOnTrue(m_subsystem_manager.intakeCommand());
+
+    new Trigger(() -> Math.abs(m_mainStick.getRawAxis(Constants.IO.Board.Left.LEFT_CLIMB)) > 0.5)
+        .whileTrue(m_subsystem_manager.m_climber.LeftClimberCommand(
+          (int) Math.signum(m_mainStick.getRawAxis(Constants.IO.Board.Left.LEFT_CLIMB))));
+    
+    new Trigger(() -> Math.abs(m_mainStick.getRawAxis(Constants.IO.Board.Right.RIGHT_CLIMB)) > 0.5)
+        .whileTrue(m_subsystem_manager.m_climber.RightClimberCommand(
+          (int) Math.signum(m_mainStick.getRawAxis(Constants.IO.Board.Right.RIGHT_CLIMB))));
   }
 
   public void updateSubsystemManager(){
@@ -57,6 +71,5 @@ public class RobotContainer {
       m_mainStick.getRawAxis(0), 
       m_mainStick.getRawAxis(0));
   }
-
 
 }

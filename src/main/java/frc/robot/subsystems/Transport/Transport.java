@@ -15,7 +15,7 @@ import frc.robot.Constants.TransportConstants;
 
 public abstract class Transport extends SubsystemBase {
 
-  public boolean noteStored;
+  public boolean note_stored;
 
   public Timer color_refresh;
 
@@ -55,7 +55,7 @@ public abstract class Transport extends SubsystemBase {
       color_refresh.restart();
       readColorProx();
     }
-    noteStored = (prox > TransportConstants.PROX_THRESHOLD) || getSwitchPressed();
+    note_stored = (prox > TransportConstants.PROX_THRESHOLD) || getSwitchPressed();
   }
 
   @Override

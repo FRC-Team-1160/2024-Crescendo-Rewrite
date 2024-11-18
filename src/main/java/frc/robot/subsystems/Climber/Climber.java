@@ -6,6 +6,8 @@ package frc.robot.subsystems.Climber;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.ClimberConstants;
@@ -14,6 +16,12 @@ public abstract class Climber extends SubsystemBase {
 
   public Climber() {
 
+  }
+
+  enum ClimberDirection {
+    kUP,
+    kDOWN,
+    kOFF
   }
 
   public void setLeftClimber(int direction){ //-1, 0, 1
@@ -31,6 +39,18 @@ public abstract class Climber extends SubsystemBase {
   abstract boolean getLeftSwitch();
 
   abstract boolean getRightSwitch();
+
+  public Command LeftClimberCommand(int direction){
+    return new StartEndCommand(
+      () -> setLeftClimber(direction), //CONSTANTS
+      () -> setLeftClimber(0));
+  }
+
+  public Command RightClimberCommand(int direction){
+    return new StartEndCommand(
+      () -> setRightClimber(direction), //CONSTANTS
+      () -> setRightClimber(0));
+  }
 
   @Override
   public void periodic() {

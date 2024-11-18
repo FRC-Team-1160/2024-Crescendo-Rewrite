@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.util.function.BooleanConsumer;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
@@ -36,6 +37,8 @@ public class SubsystemManager {
 
     DriveState drive_state;
     ShootState shoot_state;
+
+    boolean note_stored;
 
     Pose2d tracked_note;
 
@@ -71,6 +74,8 @@ public class SubsystemManager {
         drive_state = DriveState.FULL_CONTROL;
         shoot_state = ShootState.OFF;
 
+        note_stored = false;
+
         drive_angle_pid = new PIDController(0.1, 0, 0); //GET CONSTANTS
         drive_angle_pid.enableContinuousInput(-Math.PI, Math.PI);
 
@@ -86,6 +91,8 @@ public class SubsystemManager {
     public void periodic(double stick_x, double stick_y, double stick_a){
 
         robot_pose = m_pose_estimator.update(m_drive.getGyroAngle(), m_drive.getModulePositions());
+
+        note_stored = m_transport.note_stored;
 
         double drive_x = stick_x * SwerveConstants.MAX_SPEED;
         double drive_y = stick_y * SwerveConstants.MAX_SPEED;
@@ -129,7 +136,7 @@ public class SubsystemManager {
     public Command aimSpeakerCommand(){
         return new FunctionalCommand(
             () -> drive_state = DriveState.AIMING_SPEAKER, 
-            null, 
+            null,
             canceled -> {if (canceled) drive_state = DriveState.FULL_CONTROL;}, 
             () -> drive_state != DriveState.AIMING_SPEAKER);
     }
@@ -148,10 +155,18 @@ public class SubsystemManager {
                 shoot_state = ShootState.SHOOTING;
                 m_transport.transportOn();},
             null, 
-            canceled -> {
-                if (canceled) shoot_state = ShootState.OFF;
+            interrupted -> {
+                if (interrupted) shoot_state = ShootState.OFF;
                 m_transport.transportOff();}, 
             () -> shoot_state != ShootState.SHOOTING)
                 .raceWith(new WaitCommand(1.0));
+    }
+
+    public Command intakeCommand(){
+        return new FunctionalCommand(
+            () -> m_intake.setSolenoidValue(DoubleSolenoid.Value.kForward),
+            null, 
+            (interrupted) -> m_intake.setSolenoidValue(null), 
+            () -> !note_stored);
     }
 }
