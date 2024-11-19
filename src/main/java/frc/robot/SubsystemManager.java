@@ -7,6 +7,9 @@ import org.ejml.equation.Function;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.util.function.BooleanConsumer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Timer;
@@ -47,6 +50,8 @@ public class SubsystemManager {
     Pose2d robot_pose;
     SwerveDrivePoseEstimator m_pose_estimator;
 
+    StructPublisher<Pose2d> adv_pose_pub;
+
     enum DriveState {
         FULL_CONTROL,
         AIMING_SPEAKER,
@@ -86,6 +91,12 @@ public class SubsystemManager {
             m_drive.getModulePositions(), 
             robot_pose);
 
+    }
+
+    public void setupDashboard(){
+        NetworkTableInstance inst = NetworkTableInstance.getDefault();
+        NetworkTable adv_swerve = inst.getTable("adv_swerve");
+        adv_pose_pub = adv_swerve.getStructTopic("Pose", Pose2d.struct).publish();
     }
 
     public void periodic(double stick_x, double stick_y, double stick_a){
@@ -131,6 +142,12 @@ public class SubsystemManager {
             case OFF:
                 m_shooter.setSpeed(0);
         }
+
+        publishAdv();
+    }
+
+    public void publishAdv(){
+        adv_pose_pub.set(robot_pose);
     }
 
     public Command aimSpeakerCommand(){

@@ -37,7 +37,6 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new JoystickButton(m_leftBoard, Constants.IO.Board.Left.AIM)
         .whileTrue(m_subsystem_manager.aimSpeakerCommand());
 

@@ -15,6 +15,12 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -31,6 +37,12 @@ public abstract class DriveTrain extends SubsystemBase {
 
   public SwerveDriveKinematics m_kinematics;
 
+  public SwerveModuleState[] m_module_states;
+
+  public StructArrayPublisher<SwerveModuleState> adv_real_states_pub, adv_target_states_pub;
+
+  public StructPublisher<Rotation2d> adv_gyro_pub;
+  
   public DriveTrain(){
     double offset = 23.75 * 0.0254; //MOVE TO CONSTANTS
 
@@ -41,11 +53,13 @@ public abstract class DriveTrain extends SubsystemBase {
       new Translation2d(-offset, -offset) //back right
     );
 
-    m_modules = new SwerveModule[4];
-    m_modules[0] = initializeModule(1, 1, 1); // FIX PORTS
-    m_modules[1] = initializeModule(2, 2, 2);
-    m_modules[2] = initializeModule(3, 3, 3);
-    m_modules[3] = initializeModule(4, 4, 4);
+    m_modules = new SwerveModule[4]; // FIX PORTS
+    m_modules[0] = initializeModule(1, 1, 1); //fl
+    m_modules[1] = initializeModule(2, 2, 2); //fr
+    m_modules[2] = initializeModule(3, 3, 3); //bl
+    m_modules[3] = initializeModule(4, 4, 4); //br
+
+    setupDashboard();
   }
 
   abstract SwerveModule initializeModule(int drive_port, int steer_port, int sensor_port);
@@ -65,17 +79,17 @@ public abstract class DriveTrain extends SubsystemBase {
     //fix weird change over time shenanigans
     chassis_speeds = discretize_chassis_speeds(chassis_speeds);
 
-    SwerveModuleState[] module_states = (m_kinematics.toSwerveModuleStates(chassis_speeds));
+    m_module_states = (m_kinematics.toSwerveModuleStates(chassis_speeds));
 
     //change target wheel directions if the wheel has to rotate more than 90*
-    for (int i = 0; i < module_states.length; i++){
-      module_states[i] = SwerveModuleState.optimize(module_states[i], m_modules[i].getAngle());
+    for (int i = 0; i < m_module_states.length; i++){
+      m_module_states[i] = SwerveModuleState.optimize(m_module_states[i], m_modules[i].getAngle());
     }
 
     //normalize wheel speeds of any are greater than max speed
-    SwerveDriveKinematics.desaturateWheelSpeeds(module_states, SwerveConstants.MAX_SPEED); 
+    SwerveDriveKinematics.desaturateWheelSpeeds(m_module_states, SwerveConstants.MAX_SPEED); 
 
-    setModules(module_states);
+    setModules(m_module_states);
   }
 
   public void setModules(SwerveModuleState[] module_states){
@@ -107,14 +121,83 @@ public abstract class DriveTrain extends SubsystemBase {
     return positions;
   }
 
+    public SwerveModuleState[] getModuleStates(){
+    var states = new SwerveModuleState[m_modules.length];
+    for (int i = 0; i < m_modules.length; i++){
+      states[i] = m_modules[i].getModuleState();
+    }
+    return states;
+  }
 
   public abstract Rotation2d getGyroAngle();
+
+  public void setupDashboard(){
+
+    //instantiate network publishers for advantagescope
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    NetworkTable adv_swerve = inst.getTable("adv_swerve");
+    adv_real_states_pub = adv_swerve.getStructArrayTopic("States", SwerveModuleState.struct).publish();
+    adv_target_states_pub = adv_swerve.getStructArrayTopic("Target States", SwerveModuleState.struct).publish();
+    adv_gyro_pub = adv_swerve.getStructTopic("Gyro", Rotation2d.struct).publish();
+
+    //create swerve drive publishers for elastic dashboard (one time setup, auto-call lambdas)
+    SmartDashboard.putData("Swerve Target States", new Sendable(){
+      @Override
+      public void initSendable(SendableBuilder builder){
+        builder.setSmartDashboardType("SwerveDrive");
+        
+        builder.addDoubleProperty("Front Left Angle", () -> m_module_states[0].angle.getDegrees(), null);
+        builder.addDoubleProperty("Front Left Velocity", () -> m_module_states[0].speedMetersPerSecond, null);
+
+        builder.addDoubleProperty("Front Right Angle", () -> m_module_states[1].angle.getDegrees(), null);
+        builder.addDoubleProperty("Front Right Velocity", () -> m_module_states[1].speedMetersPerSecond, null);
+        
+        builder.addDoubleProperty("Back Left Angle", () -> m_module_states[2].angle.getDegrees(), null);
+        builder.addDoubleProperty("Back Left Velocity", () -> m_module_states[2].speedMetersPerSecond, null);
+
+        builder.addDoubleProperty("Back Right Angle", () -> m_module_states[3].angle.getDegrees(), null);
+        builder.addDoubleProperty("Back Right Velocity", () -> m_module_states[3].speedMetersPerSecond, null);
+
+        builder.addDoubleProperty("Robot Angle", () -> getGyroAngle().getDegrees(), null);
+      }
+    });
+
+    SmartDashboard.putData("Swerve Real States", new Sendable(){
+      @Override
+      public void initSendable(SendableBuilder builder){
+        builder.setSmartDashboardType("SwerveDrive");
+        
+        builder.addDoubleProperty("Front Left Angle", () -> m_modules[0].getAngle().getDegrees(), null);
+        builder.addDoubleProperty("Front Left Velocity", () -> m_modules[0].getSpeed(), null);
+
+        builder.addDoubleProperty("Front Right Angle", () -> m_modules[1].getAngle().getDegrees(), null);
+        builder.addDoubleProperty("Front Right Velocity", () -> m_modules[1].getSpeed(), null);
+        
+        builder.addDoubleProperty("Back Left Angle", () -> m_modules[2].getAngle().getDegrees(), null);
+        builder.addDoubleProperty("Back Left Velocity", () -> m_modules[2].getSpeed(), null);
+
+        builder.addDoubleProperty("Back Right Angle", () -> m_modules[3].getAngle().getDegrees(), null);
+        builder.addDoubleProperty("Back Right Velocity", () -> m_modules[3].getSpeed(), null);
+
+        builder.addDoubleProperty("Robot Angle", () -> getGyroAngle().getDegrees(), null);
+      }
+    });
+
+  }
+
+  public void publishAdv(){
+    adv_real_states_pub.set(getModuleStates());
+    adv_target_states_pub.set(m_module_states);
+    adv_gyro_pub.set(getGyroAngle());
+  }
 
   @Override
   public void periodic() {
     for (SwerveModule module : m_modules){
       module.update();
     }
+
+    publishAdv();
 
   }
 
