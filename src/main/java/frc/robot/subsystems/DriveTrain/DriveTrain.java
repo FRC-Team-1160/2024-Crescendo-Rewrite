@@ -62,7 +62,23 @@ public abstract class DriveTrain extends SubsystemBase {
     setupDashboard();
   }
 
+  /**
+   * Creates either a SwerveModuleRealIO() or SwerveModuleSimIO() object.
+   * @param drive_port port number of the drive motor
+   * @param steer_port port number of the steer motor
+   * @param sensor_port port number of the module's CANcoder
+   * @return
+   */
+
   abstract SwerveModule initializeModule(int drive_port, int steer_port, int sensor_port);
+
+  /**
+   * Calculates and sends inputs to swerve modules given field-relative speeds.
+   * Calls setSwerveDrive(ChassisSpeeds chassis_speeds)
+   * @param x_metersPerSecond X-axis speed in m/s. Forward is positive.
+   * @param y_metersPerSecond Y-axis speed in m/s. Right is positive.
+   * @param a_radiansPerSecond Angular speed in rad/s. CCW is positive.
+   */
 
   public void setSwerveDrive(double x_metersPerSecond, double y_metersPerSecond, double a_radiansPerSecond){
     //converts speeds from field's frame of reference to robot's frame of reference
@@ -74,6 +90,11 @@ public abstract class DriveTrain extends SubsystemBase {
 
     setSwerveDrive(chassis_speeds);
   }
+
+  /**
+   * Calculates and sends inputs to swerve modules given robot-relative speeds.
+   * @param chassis_speeds
+   */
 
   public void setSwerveDrive(ChassisSpeeds chassis_speeds){
     //fix weird change over time shenanigans
@@ -92,6 +113,11 @@ public abstract class DriveTrain extends SubsystemBase {
     setModules(m_module_states);
   }
 
+  /**
+   * Sends calculated inputs to swerve modules.
+   * @param module_states
+   */
+
   public void setModules(SwerveModuleState[] module_states){
     for (int i = 0; i < m_modules.length; i++){
       m_modules[i].setState(module_states[i]);
@@ -99,6 +125,13 @@ public abstract class DriveTrain extends SubsystemBase {
   }
 
   //Thanks to Team 4738 for modified discretize code
+
+  /**
+   * Accounts for drift while simultaneously translating and rotating by discretizing.
+   * @param speeds
+   * @return Adjusted chassis speeds.
+   */
+
   public ChassisSpeeds discretize_chassis_speeds(ChassisSpeeds speeds) {
     double dt = RobotConstants.LOOP_TIME_SECONDS; 
     //makes a Pose2d for the target delta over one time loop
@@ -113,6 +146,11 @@ public abstract class DriveTrain extends SubsystemBase {
     return new ChassisSpeeds((twist.dx / dt), (twist.dy / dt), (speeds.omegaRadiansPerSecond));
   }
 
+  /**
+   * Returns the measured swerve module positions for odometry.
+   * @return The measured swerve module positions.
+   */
+
   public SwerveModulePosition[] getModulePositions(){
     var positions = new SwerveModulePosition[m_modules.length];
     for (int i = 0; i < m_modules.length; i++){
@@ -121,7 +159,12 @@ public abstract class DriveTrain extends SubsystemBase {
     return positions;
   }
 
-    public SwerveModuleState[] getModuleStates(){
+  /**
+   * Returns the measured swerve module states for telemetry.
+   * @return The measured swerve module states.
+   */
+
+  public SwerveModuleState[] getModuleStates(){
     var states = new SwerveModuleState[m_modules.length];
     for (int i = 0; i < m_modules.length; i++){
       states[i] = m_modules[i].getModuleState();
@@ -129,7 +172,17 @@ public abstract class DriveTrain extends SubsystemBase {
     return states;
   }
 
+  /**
+   * Gets either the measured yaw from the AHRS or the calculated angle from the simulation.
+   * Forward is 0, CCW is positive.
+   * @return The robot yaw.
+   */
+
   public abstract Rotation2d getGyroAngle();
+
+  /**
+   * One-time method to instantiate NT publishers for AdvantageScope and Elastic.
+   */
 
   public void setupDashboard(){
 
@@ -184,6 +237,10 @@ public abstract class DriveTrain extends SubsystemBase {
     });
 
   }
+
+  /**
+   * Publishes telemetry readings to AdvantageScope
+   */
 
   public void publishAdv(){
     adv_real_states_pub.set(getModuleStates());

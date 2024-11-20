@@ -31,12 +31,6 @@ public class TransportRealIO extends Transport {
     m_belt = new CANSparkMax(0, CANSparkLowLevel.MotorType.kBrushless);
   }
 
-  /**
-   * Example command factory method.
-   *
-   * @return a command
-   */
-
   public void setWheels(double volts){
     l_wheel.setVoltage(-volts);
     r_wheel.setVoltage(volts);

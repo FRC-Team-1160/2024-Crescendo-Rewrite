@@ -52,6 +52,8 @@ public class SubsystemManager {
 
     StructPublisher<Pose2d> adv_pose_pub;
 
+    Commands commands;
+
     enum DriveState {
         FULL_CONTROL,
         AIMING_SPEAKER,
@@ -90,6 +92,8 @@ public class SubsystemManager {
             m_drive.getGyroAngle(), 
             m_drive.getModulePositions(), 
             robot_pose);
+
+        commands = new Commands();
 
     }
 
@@ -137,7 +141,7 @@ public class SubsystemManager {
                 double dist = Math.sqrt(
                     Math.pow(FieldConstants.SPEAKER_Y - robot_pose.getY(), 2) +
                     Math.pow(FieldConstants.SPEAKER_X - robot_pose.getX(), 2));
-                m_shooter.setSpeed(Math.min(3000 + 500 * dist, 5000));
+                m_shooter.setSpeed(Math.min(3000 + 500 * dist, 5000)); //random numbers idk
                 break;
             case OFF:
                 m_shooter.setSpeed(0);
@@ -150,40 +154,42 @@ public class SubsystemManager {
         adv_pose_pub.set(robot_pose);
     }
 
-    public Command aimSpeakerCommand(){
-        return new FunctionalCommand(
-            () -> drive_state = DriveState.AIMING_SPEAKER, 
-            null,
-            canceled -> {if (canceled) drive_state = DriveState.FULL_CONTROL;}, 
-            () -> drive_state != DriveState.AIMING_SPEAKER);
-    }
+    class Commands {
+        public Command aimSpeaker(){
+            return new FunctionalCommand(
+                () -> drive_state = DriveState.AIMING_SPEAKER, 
+                null,
+                canceled -> {if (canceled) drive_state = DriveState.FULL_CONTROL;}, 
+                () -> drive_state != DriveState.AIMING_SPEAKER);
+        }
 
-    public Command aimNoteCommand(){
-        return new FunctionalCommand(
-            () -> {if (tracked_note != null) drive_state = DriveState.AIMING_NOTE;}, 
-            null,
-            canceled -> {if (canceled) drive_state = DriveState.FULL_CONTROL;}, 
-            () -> drive_state != DriveState.AIMING_NOTE || tracked_note == null);
-    }
+        public Command aimNote(){
+            return new FunctionalCommand(
+                () -> {if (tracked_note != null) drive_state = DriveState.AIMING_NOTE;}, 
+                null,
+                canceled -> {if (canceled) drive_state = DriveState.FULL_CONTROL;}, 
+                () -> drive_state != DriveState.AIMING_NOTE || tracked_note == null);
+        }
 
-    public Command shootCommand(){
-        return new FunctionalCommand(
-            () -> {
-                shoot_state = ShootState.SHOOTING;
-                m_transport.transportOn();},
-            null, 
-            interrupted -> {
-                if (interrupted) shoot_state = ShootState.OFF;
-                m_transport.transportOff();}, 
-            () -> shoot_state != ShootState.SHOOTING)
-                .raceWith(new WaitCommand(1.0));
-    }
+        public Command shoot(){
+            return new FunctionalCommand(
+                () -> {
+                    shoot_state = ShootState.SHOOTING;
+                    m_transport.transportOn();},
+                null, 
+                interrupted -> {
+                    if (interrupted) shoot_state = ShootState.OFF;
+                    m_transport.transportOff();}, 
+                () -> shoot_state != ShootState.SHOOTING)
+                    .raceWith(new WaitCommand(1.0));
+        }
 
-    public Command intakeCommand(){
-        return new FunctionalCommand(
-            () -> m_intake.setSolenoidValue(DoubleSolenoid.Value.kForward),
-            null, 
-            (interrupted) -> m_intake.setSolenoidValue(null), 
-            () -> !note_stored);
+        public Command intake(){
+            return new FunctionalCommand(
+                () -> m_intake.setSolenoidValue(DoubleSolenoid.Value.kForward),
+                null, 
+                (interrupted) -> m_intake.setSolenoidValue(null), 
+                () -> !note_stored);
+        }
     }
 }

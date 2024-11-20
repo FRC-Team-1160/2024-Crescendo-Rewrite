@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMax;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.ClimberConstants;
@@ -18,17 +19,15 @@ public abstract class Intake extends SubsystemBase {
 
   public DoubleSolenoid.Value solenoid_default, solenoid_current;
 
+  public Commands commands;
+
   /** Creates a new ExampleSubsystem. */
   public Intake() {
     solenoid_default = DoubleSolenoid.Value.kOff;
     setSolenoidValue(null);
-  }
 
-  /**
-   * Example command factory method.
-   *
-   * @return a command
-   */
+    this.commands = new Commands();
+  }
 
   public void intake(){
     setWheels(IntakeConstants.INTAKE_VOLTS);
@@ -59,6 +58,16 @@ public abstract class Intake extends SubsystemBase {
   abstract void setSolenoid(DoubleSolenoid.Value state);
 
   abstract void setWheels(double volts);
+
+  public class Commands {
+
+    public Command setDefault(){
+      return new StartEndCommand(
+        () -> setSolenoidDefault(DoubleSolenoid.Value.kForward), 
+        () -> setSolenoidDefault(DoubleSolenoid.Value.kReverse));
+    }
+    
+  }
 
   @Override
   public void periodic() {

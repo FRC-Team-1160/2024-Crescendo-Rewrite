@@ -22,12 +22,6 @@ public class ClimberSimIO extends Climber {
 
   }
 
-  /**
-   * Example command factory method.
-   *
-   * @return a command
-   */
-
   public void setLeftMotor(double speed){
 
   }

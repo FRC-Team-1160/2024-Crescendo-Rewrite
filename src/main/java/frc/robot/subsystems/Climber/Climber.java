@@ -14,8 +14,10 @@ import frc.robot.Constants.ClimberConstants;
 
 public abstract class Climber extends SubsystemBase {
 
-  public Climber() {
+  public Commands commands;
 
+  public Climber() {
+    commands = new Commands();
   }
 
   enum ClimberDirection {
@@ -40,16 +42,20 @@ public abstract class Climber extends SubsystemBase {
 
   abstract boolean getRightSwitch();
 
-  public Command LeftClimberCommand(int direction){
-    return new StartEndCommand(
-      () -> setLeftClimber(direction), //CONSTANTS
-      () -> setLeftClimber(0));
-  }
+  public class Commands {
 
-  public Command RightClimberCommand(int direction){
-    return new StartEndCommand(
-      () -> setRightClimber(direction), //CONSTANTS
-      () -> setRightClimber(0));
+    public Command setLeftDir(int direction){
+      return new StartEndCommand(
+        () -> setLeftClimber(direction),
+        () -> setLeftClimber(0));
+    }
+
+    public Command setRightDir(int direction){
+      return new StartEndCommand(
+        () -> setRightClimber(direction),
+        () -> setRightClimber(0));
+    }
+
   }
 
   @Override

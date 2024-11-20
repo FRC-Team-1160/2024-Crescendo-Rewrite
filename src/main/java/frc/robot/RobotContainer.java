@@ -38,29 +38,26 @@ public class RobotContainer {
 
   private void configureBindings() {
     new JoystickButton(m_leftBoard, Constants.IO.Board.Left.AIM)
-        .whileTrue(m_subsystem_manager.aimSpeakerCommand());
+        .whileTrue(m_subsystem_manager.commands.aimSpeaker());
 
     new JoystickButton(m_leftBoard, Constants.IO.Board.Left.SHOOT)
-        .onTrue(m_subsystem_manager.shootCommand());
+        .onTrue(m_subsystem_manager.commands.shoot());
 
     new JoystickButton(m_rightBoard, Constants.IO.Board.Right.UP_DOWN_INTAKE)
-        .onTrue(new InstantCommand(
-          () -> m_subsystem_manager.m_intake.setSolenoidDefault(DoubleSolenoid.Value.kForward)))
-        .onFalse(new InstantCommand(
-          () -> m_subsystem_manager.m_intake.setSolenoidDefault(DoubleSolenoid.Value.kReverse)));
+      .whileTrue(m_subsystem_manager.m_intake.commands.setDefault());
 
     new JoystickButton(m_leftBoard, Constants.IO.Board.Left.AIM)
-        .whileTrue(m_subsystem_manager.aimSpeakerCommand());
+        .whileTrue(m_subsystem_manager.commands.aimSpeaker());
 
     new JoystickButton(m_rightBoard, Constants.IO.Board.Right.INTAKE)
-        .toggleOnTrue(m_subsystem_manager.intakeCommand());
+        .toggleOnTrue(m_subsystem_manager.commands.intake());
 
     new Trigger(() -> Math.abs(m_mainStick.getRawAxis(Constants.IO.Board.Left.LEFT_CLIMB)) > 0.5)
-        .whileTrue(m_subsystem_manager.m_climber.LeftClimberCommand(
+        .whileTrue(m_subsystem_manager.m_climber.commands.setLeftDir(
           (int) Math.signum(m_mainStick.getRawAxis(Constants.IO.Board.Left.LEFT_CLIMB))));
     
     new Trigger(() -> Math.abs(m_mainStick.getRawAxis(Constants.IO.Board.Right.RIGHT_CLIMB)) > 0.5)
-        .whileTrue(m_subsystem_manager.m_climber.RightClimberCommand(
+        .whileTrue(m_subsystem_manager.m_climber.commands.setRightDir(
           (int) Math.signum(m_mainStick.getRawAxis(Constants.IO.Board.Right.RIGHT_CLIMB))));
   }
 

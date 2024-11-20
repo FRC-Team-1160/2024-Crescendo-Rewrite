@@ -29,12 +29,6 @@ public class IntakeRealIO extends Intake {
     m_feed_motor = new CANSparkMax(Ports.INTAKE_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
   }
 
-  /**
-   * Example command factory method.
-   *
-   * @return a command
-   */
-
   public void setSolenoid(DoubleSolenoid.Value state){
     m_solenoid.set(state);
   }
