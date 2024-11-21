@@ -119,10 +119,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>edu.wpi.first.wpilibj.DoubleSolenoid.Value</code></div>
 <div class="col-second odd-row-color"><code><a href="#solenoid_current" class="member-name-link">solenoid_current</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">The current setting of the solenoid controlled by commands.</div>
+</div>
 <div class="col-first even-row-color"><code>edu.wpi.first.wpilibj.DoubleSolenoid.Value</code></div>
 <div class="col-second even-row-color"><code><a href="#solenoid_default" class="member-name-link">solenoid_default</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">The default setting of the solenoid determined by the switch on the driver dashboard.</div>
+</div>
 </div>
 </section>
 </li>
@@ -135,9 +139,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">Intake</a>()</code></div>
-<div class="col-last even-row-color">
-<div class="block">Creates a new ExampleSubsystem.</div>
-</div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -146,7 +148,7 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifier and Type</div>
@@ -154,28 +156,46 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#intake()" class="member-name-link">intake</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Starts the intake wheels.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#outtake()" class="member-name-link">outtake</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Starts the intake wheels in reverse.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSolenoidDefault(edu.wpi.first.wpilibj.DoubleSolenoid.Value)" class="member-name-link">setSolenoidDefault</a><wbr>(edu.wpi.first.wpilibj.DoubleSolenoid.Value&nbsp;state)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setSolenoid(edu.wpi.first.wpilibj.DoubleSolenoid.Value)" class="member-name-link">setSolenoid</a><wbr>(edu.wpi.first.wpilibj.DoubleSolenoid.Value&nbsp;state)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSolenoidValue(edu.wpi.first.wpilibj.DoubleSolenoid.Value)" class="member-name-link">setSolenoidValue</a><wbr>(edu.wpi.first.wpilibj.DoubleSolenoid.Value&nbsp;state)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSolenoidDefault(edu.wpi.first.wpilibj.DoubleSolenoid.Value)" class="member-name-link">setSolenoidDefault</a><wbr>(edu.wpi.first.wpilibj.DoubleSolenoid.Value&nbsp;state)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the solenoid's default state.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSolenoidValue(edu.wpi.first.wpilibj.DoubleSolenoid.Value)" class="member-name-link">setSolenoidValue</a><wbr>(edu.wpi.first.wpilibj.DoubleSolenoid.Value&nbsp;state)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the solenoid's current state.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setWheels(double)" class="member-name-link">setWheels</a><wbr>(double&nbsp;volts)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#simulationPeriodic()" class="member-name-link">simulationPeriodic</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Stops all intake activity.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stopFeed()" class="member-name-link">stopFeed</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Stops the wheels.</div>
+</div>
 </div>
 </div>
 </div>
@@ -203,12 +223,14 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="solenoid_default">
 <h3>solenoid_default</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj.DoubleSolenoid.Value</span>&nbsp;<span class="element-name">solenoid_default</span></div>
+<div class="block">The default setting of the solenoid determined by the switch on the driver dashboard.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="solenoid_current">
 <h3>solenoid_current</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.wpilibj.DoubleSolenoid.Value</span>&nbsp;<span class="element-name">solenoid_current</span></div>
+<div class="block">The current setting of the solenoid controlled by commands. This overrides solenoid_default</div>
 </section>
 </li>
 <li>
@@ -229,7 +251,6 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>Intake</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Intake</span>()</div>
-<div class="block">Creates a new ExampleSubsystem.</div>
 </section>
 </li>
 </ul>
@@ -244,36 +265,62 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="intake()">
 <h3>intake</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">intake</span>()</div>
+<div class="block">Starts the intake wheels.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="outtake()">
 <h3>outtake</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">outtake</span>()</div>
+<div class="block">Starts the intake wheels in reverse.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="stopFeed()">
 <h3>stopFeed</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">stopFeed</span>()</div>
+<div class="block">Stops the wheels.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="stop()">
 <h3>stop</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">stop</span>()</div>
+<div class="block">Stops all intake activity. This resets the solenoid to the default position.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setSolenoidDefault(edu.wpi.first.wpilibj.DoubleSolenoid.Value)">
 <h3>setSolenoidDefault</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSolenoidDefault</span><wbr><span class="parameters">(edu.wpi.first.wpilibj.DoubleSolenoid.Value&nbsp;state)</span></div>
+<div class="block">Sets the solenoid's default state. This should primarily be done by the dashboard switch.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>state</code> - The desired state.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setSolenoidValue(edu.wpi.first.wpilibj.DoubleSolenoid.Value)">
 <h3>setSolenoidValue</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSolenoidValue</span><wbr><span class="parameters">(edu.wpi.first.wpilibj.DoubleSolenoid.Value&nbsp;state)</span></div>
+<div class="block">Sets the solenoid's current state. Passing null will allow the solenoid to return to the default state.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>state</code> - The desired state.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setSolenoid(edu.wpi.first.wpilibj.DoubleSolenoid.Value)">
+<h3>setSolenoid</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSolenoid</span><wbr><span class="parameters">(edu.wpi.first.wpilibj.DoubleSolenoid.Value&nbsp;state)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="setWheels(double)">
+<h3>setWheels</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setWheels</span><wbr><span class="parameters">(double&nbsp;volts)</span></div>
 </section>
 </li>
 <li>

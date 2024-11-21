@@ -99,7 +99,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>edu.wpi.first.math.controller.PIDController</code></div>
+<div class="col-first even-row-color"><code>protected edu.wpi.first.math.controller.PIDController</code></div>
 <div class="col-second even-row-color"><code><a href="#pitch_pid" class="member-name-link">pitch_pid</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -131,16 +131,22 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPitchSetpoint()" class="member-name-link">getPitchSetpoint</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the setpoint of the pitch PID controller.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPitchSetpoint(double)" class="member-name-link">setPitchSetpoint</a><wbr>(double&nbsp;setpoint)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the setpoint of the pitch PID controller.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSpeed(double)" class="member-name-link">setSpeed</a><wbr>(double&nbsp;rpm)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the speed of both flywheel motors.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#simulationPeriodic()" class="member-name-link">simulationPeriodic</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -170,7 +176,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="pitch_pid">
 <h3>pitch_pid</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.controller.PIDController</span>&nbsp;<span class="element-name">pitch_pid</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">edu.wpi.first.math.controller.PIDController</span>&nbsp;<span class="element-name">pitch_pid</span></div>
 </section>
 </li>
 </ul>
@@ -199,18 +205,33 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getPitchSetpoint()">
 <h3>getPitchSetpoint</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getPitchSetpoint</span>()</div>
+<div class="block">Gets the setpoint of the pitch PID controller.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The setpoint of the pitch PID controller.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setPitchSetpoint(double)">
 <h3>setPitchSetpoint</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPitchSetpoint</span><wbr><span class="parameters">(double&nbsp;setpoint)</span></div>
+<div class="block">Sets the setpoint of the pitch PID controller.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>setpoint</code> - The desired setpoint</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setSpeed(double)">
 <h3>setSpeed</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSpeed</span><wbr><span class="parameters">(double&nbsp;rpm)</span></div>
+<div class="block">Sets the speed of both flywheel motors.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>rpm</code> - The desired speed in rpm.</dd>
+</dl>
 </section>
 </li>
 <li>

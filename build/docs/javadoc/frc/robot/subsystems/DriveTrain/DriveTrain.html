@@ -99,24 +99,31 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Rotation2d&gt;</code></div>
+<div class="col-first even-row-color"><code>protected edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Rotation2d&gt;</code></div>
 <div class="col-second even-row-color"><code><a href="#adv_gyro_pub" class="member-name-link">adv_gyro_pub</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>edu.wpi.first.networktables.StructArrayPublisher&lt;edu.wpi.first.math.kinematics.SwerveModuleState&gt;</code></div>
+<div class="col-last even-row-color">
+<div class="block">State publisher for AdvantageScope.</div>
+</div>
+<div class="col-first odd-row-color"><code>protected edu.wpi.first.networktables.StructArrayPublisher&lt;edu.wpi.first.math.kinematics.SwerveModuleState&gt;</code></div>
 <div class="col-second odd-row-color"><code><a href="#adv_real_states_pub" class="member-name-link">adv_real_states_pub</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>edu.wpi.first.networktables.StructArrayPublisher&lt;edu.wpi.first.math.kinematics.SwerveModuleState&gt;</code></div>
+<div class="col-last odd-row-color">
+<div class="block">State publisher for AdvantageScope.</div>
+</div>
+<div class="col-first even-row-color"><code>protected edu.wpi.first.networktables.StructArrayPublisher&lt;edu.wpi.first.math.kinematics.SwerveModuleState&gt;</code></div>
 <div class="col-second even-row-color"><code><a href="#adv_target_states_pub" class="member-name-link">adv_target_states_pub</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>edu.wpi.first.math.kinematics.SwerveDriveKinematics</code></div>
-<div class="col-second odd-row-color"><code><a href="#m_kinematics" class="member-name-link">m_kinematics</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>edu.wpi.first.math.kinematics.SwerveModuleState[]</code></div>
-<div class="col-second even-row-color"><code><a href="#m_module_states" class="member-name-link">m_module_states</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="SwerveModule.html" title="class in frc.robot.subsystems.DriveTrain">SwerveModule</a>[]</code></div>
-<div class="col-second odd-row-color"><code><a href="#m_modules" class="member-name-link">m_modules</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">State publisher for AdvantageScope.</div>
+</div>
+<div class="col-first odd-row-color"><code>edu.wpi.first.math.kinematics.SwerveModuleState[]</code></div>
+<div class="col-second odd-row-color"><code><a href="#m_module_states" class="member-name-link">m_module_states</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">The desired module states.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="SwerveModule.html" title="class in frc.robot.subsystems.DriveTrain">SwerveModule</a>[]</code></div>
+<div class="col-second even-row-color"><code><a href="#m_modules" class="member-name-link">m_modules</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The drive train's SwerveModule objects.</div>
+</div>
 </div>
 </section>
 </li>
@@ -164,14 +171,16 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the measured swerve module states for telemetry.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#publishAdv()" class="member-name-link">publishAdv</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Publishes telemetry readings to AdvantageScope</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="SwerveModule.html" title="class in frc.robot.subsystems.DriveTrain">SwerveModule</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#initializeModule(int,int,int)" class="member-name-link">initializeModule</a><wbr>(int&nbsp;drive_port,
+ int&nbsp;steer_port,
+ int&nbsp;sensor_port)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Creates either a SwerveModuleRealIO or SwerveModuleSimIO object.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setModules(edu.wpi.first.math.kinematics.SwerveModuleState%5B%5D)" class="member-name-link">setModules</a><wbr>(edu.wpi.first.math.kinematics.SwerveModuleState[]&nbsp;module_states)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -190,13 +199,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Calculates and sends inputs to swerve modules given robot-relative speeds.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setupDashboard()" class="member-name-link">setupDashboard</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">One-time method to instantiate NT publishers for AdvantageScope and Elastic.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#simulationPeriodic()" class="member-name-link">simulationPeriodic</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#simulationPeriodic()" class="member-name-link">simulationPeriodic</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -224,36 +228,35 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="m_modules">
 <h3>m_modules</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SwerveModule.html" title="class in frc.robot.subsystems.DriveTrain">SwerveModule</a>[]</span>&nbsp;<span class="element-name">m_modules</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="m_kinematics">
-<h3>m_kinematics</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.kinematics.SwerveDriveKinematics</span>&nbsp;<span class="element-name">m_kinematics</span></div>
+<div class="block">The drive train's SwerveModule objects.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="m_module_states">
 <h3>m_module_states</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.math.kinematics.SwerveModuleState[]</span>&nbsp;<span class="element-name">m_module_states</span></div>
+<div class="block">The desired module states.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="adv_real_states_pub">
 <h3>adv_real_states_pub</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructArrayPublisher&lt;edu.wpi.first.math.kinematics.SwerveModuleState&gt;</span>&nbsp;<span class="element-name">adv_real_states_pub</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructArrayPublisher&lt;edu.wpi.first.math.kinematics.SwerveModuleState&gt;</span>&nbsp;<span class="element-name">adv_real_states_pub</span></div>
+<div class="block">State publisher for AdvantageScope.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="adv_target_states_pub">
 <h3>adv_target_states_pub</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructArrayPublisher&lt;edu.wpi.first.math.kinematics.SwerveModuleState&gt;</span>&nbsp;<span class="element-name">adv_target_states_pub</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructArrayPublisher&lt;edu.wpi.first.math.kinematics.SwerveModuleState&gt;</span>&nbsp;<span class="element-name">adv_target_states_pub</span></div>
+<div class="block">State publisher for AdvantageScope.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="adv_gyro_pub">
 <h3>adv_gyro_pub</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Rotation2d&gt;</span>&nbsp;<span class="element-name">adv_gyro_pub</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">edu.wpi.first.networktables.StructPublisher&lt;edu.wpi.first.math.geometry.Rotation2d&gt;</span>&nbsp;<span class="element-name">adv_gyro_pub</span></div>
+<div class="block">State publisher for AdvantageScope.</div>
 </section>
 </li>
 </ul>
@@ -279,6 +282,23 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="initializeModule(int,int,int)">
+<h3>initializeModule</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type"><a href="SwerveModule.html" title="class in frc.robot.subsystems.DriveTrain">SwerveModule</a></span>&nbsp;<span class="element-name">initializeModule</span><wbr><span class="parameters">(int&nbsp;drive_port,
+ int&nbsp;steer_port,
+ int&nbsp;sensor_port)</span></div>
+<div class="block">Creates either a SwerveModuleRealIO or SwerveModuleSimIO object.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>drive_port</code> - port number of the drive motor</dd>
+<dd><code>steer_port</code> - port number of the steer motor</dd>
+<dd><code>sensor_port</code> - port number of the module's CANcoder</dd>
+<dt>Returns:</dt>
+<dd>The constructed SwerveModule object</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="setSwerveDrive(double,double,double)">
 <h3>setSwerveDrive</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSwerveDrive</span><wbr><span class="parameters">(double&nbsp;x_metersPerSecond,
@@ -301,7 +321,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Calculates and sends inputs to swerve modules given robot-relative speeds.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>chassis_speeds</code> - </dd>
+<dd><code>chassis_speeds</code> - The desired robot-relative chassis speeds.</dd>
 </dl>
 </section>
 </li>
@@ -312,7 +332,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Sends calculated inputs to swerve modules.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>module_states</code> - </dd>
+<dd><code>module_states</code> - The desired module states.</dd>
 </dl>
 </section>
 </li>
@@ -323,7 +343,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Accounts for drift while simultaneously translating and rotating by discretizing.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>speeds</code> - </dd>
+<dd><code>speeds</code> - Desired chassis speeds.</dd>
 <dt>Returns:</dt>
 <dd>Adjusted chassis speeds.</dd>
 </dl>
@@ -361,20 +381,6 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>The robot yaw.</dd>
 </dl>
-</section>
-</li>
-<li>
-<section class="detail" id="setupDashboard()">
-<h3>setupDashboard</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setupDashboard</span>()</div>
-<div class="block">One-time method to instantiate NT publishers for AdvantageScope and Elastic.</div>
-</section>
-</li>
-<li>
-<section class="detail" id="publishAdv()">
-<h3>publishAdv</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">publishAdv</span>()</div>
-<div class="block">Publishes telemetry readings to AdvantageScope</div>
 </section>
 </li>
 <li>

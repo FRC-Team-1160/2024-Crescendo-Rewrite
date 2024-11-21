@@ -94,7 +94,7 @@ loadScripts(document, 'script');</script>
 <h2>Field Summary</h2>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-frc.robot.subsystems.DriveTrain.DriveTrain">Fields inherited from class&nbsp;frc.robot.subsystems.DriveTrain.<a href="DriveTrain.html" title="class in frc.robot.subsystems.DriveTrain">DriveTrain</a></h3>
-<code><a href="DriveTrain.html#adv_gyro_pub">adv_gyro_pub</a>, <a href="DriveTrain.html#adv_real_states_pub">adv_real_states_pub</a>, <a href="DriveTrain.html#adv_target_states_pub">adv_target_states_pub</a>, <a href="DriveTrain.html#m_kinematics">m_kinematics</a>, <a href="DriveTrain.html#m_module_states">m_module_states</a>, <a href="DriveTrain.html#m_modules">m_modules</a></code></div>
+<code><a href="DriveTrain.html#adv_gyro_pub">adv_gyro_pub</a>, <a href="DriveTrain.html#adv_real_states_pub">adv_real_states_pub</a>, <a href="DriveTrain.html#adv_target_states_pub">adv_target_states_pub</a>, <a href="DriveTrain.html#m_module_states">m_module_states</a>, <a href="DriveTrain.html#m_modules">m_modules</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -130,7 +130,9 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initializeModule(int,int,int)" class="member-name-link">initializeModule</a><wbr>(int&nbsp;drive_port,
  int&nbsp;steer_port,
  int&nbsp;sensor_port)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates either a SwerveModuleRealIO or SwerveModuleSimIO object.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#periodic()" class="member-name-link">periodic</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -142,7 +144,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-frc.robot.subsystems.DriveTrain.DriveTrain">Methods inherited from class&nbsp;frc.robot.subsystems.DriveTrain.<a href="DriveTrain.html" title="class in frc.robot.subsystems.DriveTrain">DriveTrain</a></h3>
-<code><a href="DriveTrain.html#discretize_chassis_speeds(edu.wpi.first.math.kinematics.ChassisSpeeds)">discretize_chassis_speeds</a>, <a href="DriveTrain.html#getModulePositions()">getModulePositions</a>, <a href="DriveTrain.html#getModuleStates()">getModuleStates</a>, <a href="DriveTrain.html#publishAdv()">publishAdv</a>, <a href="DriveTrain.html#setModules(edu.wpi.first.math.kinematics.SwerveModuleState%5B%5D)">setModules</a>, <a href="DriveTrain.html#setSwerveDrive(double,double,double)">setSwerveDrive</a>, <a href="DriveTrain.html#setSwerveDrive(edu.wpi.first.math.kinematics.ChassisSpeeds)">setSwerveDrive</a>, <a href="DriveTrain.html#setupDashboard()">setupDashboard</a></code></div>
+<code><a href="DriveTrain.html#discretize_chassis_speeds(edu.wpi.first.math.kinematics.ChassisSpeeds)">discretize_chassis_speeds</a>, <a href="DriveTrain.html#getModulePositions()">getModulePositions</a>, <a href="DriveTrain.html#getModuleStates()">getModuleStates</a>, <a href="DriveTrain.html#setModules(edu.wpi.first.math.kinematics.SwerveModuleState%5B%5D)">setModules</a>, <a href="DriveTrain.html#setSwerveDrive(double,double,double)">setSwerveDrive</a>, <a href="DriveTrain.html#setSwerveDrive(edu.wpi.first.math.kinematics.ChassisSpeeds)">setSwerveDrive</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-edu.wpi.first.wpilibj2.command.SubsystemBase">Methods inherited from class&nbsp;edu.wpi.first.wpilibj2.command.SubsystemBase</h3>
 <code>addChild, getName, getSubsystem, initSendable, setName, setSubsystem</code></div>
@@ -183,6 +185,18 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SwerveModule.html" title="class in frc.robot.subsystems.DriveTrain">SwerveModule</a></span>&nbsp;<span class="element-name">initializeModule</span><wbr><span class="parameters">(int&nbsp;drive_port,
  int&nbsp;steer_port,
  int&nbsp;sensor_port)</span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="DriveTrain.html#initializeModule(int,int,int)">DriveTrain</a></code></span></div>
+<div class="block">Creates either a SwerveModuleRealIO or SwerveModuleSimIO object.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="DriveTrain.html#initializeModule(int,int,int)">initializeModule</a></code>&nbsp;in class&nbsp;<code><a href="DriveTrain.html" title="class in frc.robot.subsystems.DriveTrain">DriveTrain</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>drive_port</code> - port number of the drive motor</dd>
+<dd><code>steer_port</code> - port number of the steer motor</dd>
+<dd><code>sensor_port</code> - port number of the module's CANcoder</dd>
+<dt>Returns:</dt>
+<dd>The constructed SwerveModule object</dd>
+</dl>
 </section>
 </li>
 <li>
