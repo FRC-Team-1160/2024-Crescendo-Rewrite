@@ -35,7 +35,7 @@ public abstract class DriveTrain extends SubsystemBase {
 
   /**The drive train's SwerveModule objects. */
   public SwerveModule[] m_modules;
-
+  /**@hidden */
   public SwerveDriveKinematics m_kinematics;
   /**The desired module states. */
   public SwerveModuleState[] m_module_states;
