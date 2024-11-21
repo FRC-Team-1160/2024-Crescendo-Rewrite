@@ -33,15 +33,16 @@ import frc.robot.Constants.TransportConstants;
 
 public abstract class DriveTrain extends SubsystemBase {
 
+  /**The drive train's SwerveModule objects. */
   public SwerveModule[] m_modules;
 
   public SwerveDriveKinematics m_kinematics;
-
+  /**The desired module states. */
   public SwerveModuleState[] m_module_states;
-
-  public StructArrayPublisher<SwerveModuleState> adv_real_states_pub, adv_target_states_pub;
-
-  public StructPublisher<Rotation2d> adv_gyro_pub;
+  /**State publisher for AdvantageScope. */
+  protected StructArrayPublisher<SwerveModuleState> adv_real_states_pub, adv_target_states_pub;
+  /**State publisher for AdvantageScope. */
+  protected StructPublisher<Rotation2d> adv_gyro_pub;
   
   public DriveTrain(){
     double offset = 23.75 * 0.0254; //MOVE TO CONSTANTS
@@ -63,14 +64,14 @@ public abstract class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * Creates either a SwerveModuleRealIO() or SwerveModuleSimIO() object.
+   * Creates either a SwerveModuleRealIO or SwerveModuleSimIO object.
    * @param drive_port port number of the drive motor
    * @param steer_port port number of the steer motor
    * @param sensor_port port number of the module's CANcoder
-   * @return
+   * @return The constructed SwerveModule object
    */
 
-  abstract SwerveModule initializeModule(int drive_port, int steer_port, int sensor_port);
+  protected abstract SwerveModule initializeModule(int drive_port, int steer_port, int sensor_port);
 
   /**
    * Calculates and sends inputs to swerve modules given field-relative speeds.
@@ -93,7 +94,7 @@ public abstract class DriveTrain extends SubsystemBase {
 
   /**
    * Calculates and sends inputs to swerve modules given robot-relative speeds.
-   * @param chassis_speeds
+   * @param chassis_speeds The desired robot-relative chassis speeds.
    */
 
   public void setSwerveDrive(ChassisSpeeds chassis_speeds){
@@ -115,7 +116,7 @@ public abstract class DriveTrain extends SubsystemBase {
 
   /**
    * Sends calculated inputs to swerve modules.
-   * @param module_states
+   * @param module_states The desired module states.
    */
 
   public void setModules(SwerveModuleState[] module_states){
@@ -128,7 +129,7 @@ public abstract class DriveTrain extends SubsystemBase {
 
   /**
    * Accounts for drift while simultaneously translating and rotating by discretizing.
-   * @param speeds
+   * @param speeds Desired chassis speeds.
    * @return Adjusted chassis speeds.
    */
 
@@ -184,7 +185,7 @@ public abstract class DriveTrain extends SubsystemBase {
    * One-time method to instantiate NT publishers for AdvantageScope and Elastic.
    */
 
-  public void setupDashboard(){
+  private void setupDashboard(){
 
     //instantiate network publishers for advantagescope
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -239,10 +240,10 @@ public abstract class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * Publishes telemetry readings to AdvantageScope
+   * Publishes telemetry readings to AdvantageScope.
    */
 
-  public void publishAdv(){
+  private void publishAdv(){
     adv_real_states_pub.set(getModuleStates());
     adv_target_states_pub.set(m_module_states);
     adv_gyro_pub.set(getGyroAngle());

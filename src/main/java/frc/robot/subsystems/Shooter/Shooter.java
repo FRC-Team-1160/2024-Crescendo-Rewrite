@@ -17,7 +17,7 @@ import frc.robot.Constants.TransportConstants;
 
 public abstract class Shooter extends SubsystemBase {
 
-  public PIDController pitch_pid;
+  protected PIDController pitch_pid;
 
   public Shooter(){
     pitch_pid = new PIDController(3.5, 50.0, 0); //MOVE TO CONSTANTS
@@ -25,14 +25,26 @@ public abstract class Shooter extends SubsystemBase {
     pitch_pid.setIZone(0.02);
   }
 
+  /**
+   * Gets the setpoint of the pitch PID controller.
+   * @return The setpoint of the pitch PID controller.
+   */
   public double getPitchSetpoint(){
     return pitch_pid.getSetpoint();
   }
 
+  /**
+   * Sets the setpoint of the pitch PID controller.
+   * @param setpoint The desired setpoint
+   */
   public void setPitchSetpoint(double setpoint){
     pitch_pid.setSetpoint(setpoint);
   }
 
+  /**
+   * Sets the speed of both flywheel motors.
+   * @param rpm The desired speed in rpm.
+   */
   public void setSpeed(double rpm){
     setTopSpeed(rpm);
     setBottomSpeed(rpm);
@@ -44,6 +56,10 @@ public abstract class Shooter extends SubsystemBase {
 
   abstract void setPitchMotor(double volts);
 
+  /**
+   * Gets the measured pitch from the encoder.
+   * @return The measured pitch.
+   */
   abstract double getPitch();
 
   @Override

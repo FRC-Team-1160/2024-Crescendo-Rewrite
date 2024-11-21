@@ -25,16 +25,27 @@ public abstract class Transport extends SubsystemBase {
 
   }
 
+  /**
+   * Turns the transport mechanism on.
+   */
 
   public void transportOn(){
     setWheels(TransportConstants.WHEEL_SPEED_VOLTS);
     setBelt(TransportConstants.BELT_SPEED_VOLTS);
   }
 
+  /**
+   * Turns the transport mechanism off.
+   */
+
   public void transportOff(){
     setWheels(0);
     setBelt(0);
   }
+
+  /**
+   * Turns the transport mechanism on in reverse.
+   */
 
   public void outtake(){
     setWheels(-TransportConstants.WHEEL_SPEED_VOLTS);

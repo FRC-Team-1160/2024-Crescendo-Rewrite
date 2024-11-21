@@ -17,11 +17,13 @@ import frc.robot.Constants.IntakeConstants;
 
 public abstract class Intake extends SubsystemBase {
 
-  public DoubleSolenoid.Value solenoid_default, solenoid_current;
+  /**The default setting of the solenoid determined by the switch on the driver dashboard. */
+  public DoubleSolenoid.Value solenoid_default;
+  /**The current setting of the solenoid controlled by commands. This overrides solenoid_default*/
+  public DoubleSolenoid.Value solenoid_current;
 
   public Commands commands;
 
-  /** Creates a new ExampleSubsystem. */
   public Intake() {
     solenoid_default = DoubleSolenoid.Value.kOff;
     setSolenoidValue(null);
@@ -29,37 +31,68 @@ public abstract class Intake extends SubsystemBase {
     this.commands = new Commands();
   }
 
+  /**
+   * Starts the intake wheels.
+   */
+
   public void intake(){
     setWheels(IntakeConstants.INTAKE_VOLTS);
   }
+
+  /**
+   * Starts the intake wheels in reverse.
+   */
 
   public void outtake(){
     setWheels(IntakeConstants.OUTTAKE_VOLTS);
   }
 
+  /**
+   * Stops the wheels.
+   */
+
   public void stopFeed(){
     setWheels(0);
   }
+
+  /**
+   * Stops all intake activity. This resets the solenoid to the default position.
+   */
 
   public void stop(){
     setSolenoidValue(null);
     stopFeed();
   }
 
+  /**
+   * Sets the solenoid's default state. This should primarily be done by the dashboard switch.
+   * @param state The desired state.
+   */
+
   public void setSolenoidDefault(DoubleSolenoid.Value state){
     solenoid_default = state;
   }
+
+  /**
+   * Sets the solenoid's current state. Passing null will allow the solenoid to return to the default state.
+   * @param state The desired state.
+   */
 
   public void setSolenoidValue(DoubleSolenoid.Value state){
     solenoid_current = state;
     setSolenoid((state == null) ? solenoid_default : state);
   }
 
-  abstract void setSolenoid(DoubleSolenoid.Value state);
+  protected abstract void setSolenoid(DoubleSolenoid.Value state);
 
-  abstract void setWheels(double volts);
+  protected abstract void setWheels(double volts);
 
   public class Commands {
+
+    /**
+     * Constructs a command that sets the solenoid default state to be triggered by the dashboard switch.
+     * @return The dashboard switch Command object.
+     */
 
     public Command setDefault(){
       return new StartEndCommand(

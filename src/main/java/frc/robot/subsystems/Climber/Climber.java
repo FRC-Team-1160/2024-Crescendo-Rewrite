@@ -14,6 +14,7 @@ import frc.robot.Constants.ClimberConstants;
 
 public abstract class Climber extends SubsystemBase {
 
+  /**Instance of the Climber.Commands class. */
   public Commands commands;
 
   public Climber() {
