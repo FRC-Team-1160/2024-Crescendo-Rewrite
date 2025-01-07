@@ -29,6 +29,7 @@ import frc.robot.subsystems.Shooter.Shooter;
 import frc.robot.subsystems.Shooter.ShooterRealIO;
 import frc.robot.subsystems.Transport.Transport;
 import frc.robot.subsystems.Transport.TransportRealIO;
+import frc.robot.subsystems.Vision.Vision;
 
 public class SubsystemManager {
 
@@ -37,6 +38,7 @@ public class SubsystemManager {
     Transport m_transport;
     Shooter m_shooter;
     Climber m_climber;
+    Vision m_vision;
 
     DriveState drive_state;
     ShootState shoot_state;
@@ -76,6 +78,7 @@ public class SubsystemManager {
             m_transport = new TransportRealIO();
             m_shooter = new ShooterRealIO();
             m_climber = new ClimberRealIO();
+            m_vision = new Vision();
         }
 
         drive_state = DriveState.FULL_CONTROL;
@@ -106,6 +109,10 @@ public class SubsystemManager {
     public void periodic(double stick_x, double stick_y, double stick_a){
 
         robot_pose = m_pose_estimator.update(m_drive.getGyroAngle(), m_drive.getModulePositions());
+
+        LimelightHelpers.SetRobotOrientation("", m_drive.getGyroAngle().getDegrees(), 0.0, 0.0, 0.0, 0.0, 0.0);
+        LimelightHelpers.PoseEstimate vision_estimate = LimelightHelpers.getBotPoseEstimate_wpiBlue("");
+        m_pose_estimator.addVisionMeasurement(vision_estimate.pose, vision_estimate.timestampSeconds);
 
         note_stored = m_transport.note_stored;
 

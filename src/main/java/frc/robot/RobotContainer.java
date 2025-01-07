@@ -44,7 +44,7 @@ public class RobotContainer {
         .onTrue(m_subsystem_manager.commands.shoot());
 
     new JoystickButton(m_rightBoard, Constants.IO.Board.Right.UP_DOWN_INTAKE)
-      .whileTrue(m_subsystem_manager.m_intake.commands.setDefault());
+        .whileTrue(m_subsystem_manager.m_intake.commands.setDefault());
 
     new JoystickButton(m_leftBoard, Constants.IO.Board.Left.AIM)
         .whileTrue(m_subsystem_manager.commands.aimSpeaker());
