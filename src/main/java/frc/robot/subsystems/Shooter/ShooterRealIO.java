@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.Port;
 import frc.robot.Constants.TransportConstants;
 
 public class ShooterRealIO extends Shooter {
@@ -27,12 +28,12 @@ public class ShooterRealIO extends Shooter {
   public CANSparkMax pitch_motor;
 
   public ShooterRealIO(){  //FIX PORTS
-    top_motor = new TalonFX(0);
-    bottom_motor = new TalonFX(0);
+    top_motor = new TalonFX(Port.SHOOTER_TOP_MOTOR);
+    bottom_motor = new TalonFX(Port.SHOOTER_TOP_MOTOR);
 
     configureTalons();
 
-    pitch_motor = new CANSparkMax(0, CANSparkLowLevel.MotorType.kBrushless);
+    pitch_motor = new CANSparkMax(Port.SHOOTER_PITCH_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
 
   }
 
@@ -57,7 +58,7 @@ public class ShooterRealIO extends Shooter {
   }
 
   public void setTopSpeed(double rpm){
-    top_motor.setControl(new VelocityVoltage(rpm));
+    top_motor.setControl(new VelocityVoltage(rpm));   
   }
 
   public void setBottomSpeed(double rpm){
@@ -65,11 +66,15 @@ public class ShooterRealIO extends Shooter {
   }
 
   public void setPitchMotor(double volts){
-    pitch_motor.setVoltage(volts);
+    // pitch_motor.setVoltage(volts);
   }
 
   public double getPitch(){
-    return pitch_motor.getAlternateEncoder(8192).getPosition();
+    if (pitch_motor != null) {
+      return pitch_motor.getAlternateEncoder(8192).getPosition();
+    } else {
+      return 0.0;
+    }
   }
 
   @Override

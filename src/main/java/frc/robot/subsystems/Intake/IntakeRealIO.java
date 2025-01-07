@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.ClimberConstants;
-import frc.robot.Constants.Ports;
+import frc.robot.Constants.Port;
 
 public class IntakeRealIO extends Intake {
 
@@ -26,15 +26,15 @@ public class IntakeRealIO extends Intake {
   /** Creates a new ExampleSubsystem. */
   public IntakeRealIO() {
     m_solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1);
-    m_feed_motor = new CANSparkMax(Ports.INTAKE_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
+    m_feed_motor = new CANSparkMax(Port.INTAKE_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
   }
 
   public void setSolenoid(DoubleSolenoid.Value state){
-    m_solenoid.set(state);
+    // m_solenoid.set(state);
   }
 
   public void setWheels(double volts){
-    m_feed_motor.set(volts);
+    // m_feed_motor.set(volts);
   }
 
   @Override

@@ -7,6 +7,8 @@ package frc.robot;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.DriveTrain.DriveTrain;
+import frc.robot.subsystems.DriveTrain.DriveTrainRealIO;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,13 +25,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final SubsystemManager m_subsystem_manager = new SubsystemManager();
+  public final SubsystemManager m_subsystem_manager = new SubsystemManager();
 
-    private Joystick m_mainStick = new Joystick(Constants.IO.MAIN_PORT);
-    private Joystick m_codriverStick = new Joystick(Constants.IO.COPILOT_PORT);
-    // private Joystick m_codriverSimpStick = new Joystick(Constants.IO.COPILOT_SIMP_PORT);
-    private Joystick m_leftBoard = new Joystick(Constants.IO.LEFT_BOARD_PORT);
-    private Joystick m_rightBoard = new Joystick(Constants.IO.RIGHT_BOARD_PORT);
+  private Joystick m_mainStick = new Joystick(Constants.IO.MAIN_PORT);
+  private Joystick m_codriverStick = new Joystick(Constants.IO.COPILOT_PORT);
+  // private Joystick m_codriverSimpStick = new Joystick(Constants.IO.COPILOT_SIMP_PORT);
+  private Joystick m_leftBoard = new Joystick(Constants.IO.LEFT_BOARD_PORT);
+  private Joystick m_rightBoard = new Joystick(Constants.IO.RIGHT_BOARD_PORT);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
@@ -40,14 +42,14 @@ public class RobotContainer {
     new JoystickButton(m_leftBoard, Constants.IO.Board.Left.AIM)
         .whileTrue(m_subsystem_manager.commands.aimSpeaker());
 
+    new JoystickButton(m_leftBoard, Constants.IO.Board.Left.REV)
+        .whileTrue(m_subsystem_manager.commands.rev());
+
     new JoystickButton(m_leftBoard, Constants.IO.Board.Left.SHOOT)
         .onTrue(m_subsystem_manager.commands.shoot());
 
     new JoystickButton(m_rightBoard, Constants.IO.Board.Right.UP_DOWN_INTAKE)
         .whileTrue(m_subsystem_manager.m_intake.commands.setDefault());
-
-    new JoystickButton(m_leftBoard, Constants.IO.Board.Left.AIM)
-        .whileTrue(m_subsystem_manager.commands.aimSpeaker());
 
     new JoystickButton(m_rightBoard, Constants.IO.Board.Right.INTAKE)
         .toggleOnTrue(m_subsystem_manager.commands.intake());
@@ -63,9 +65,9 @@ public class RobotContainer {
 
   public void updateSubsystemManager(){
     m_subsystem_manager.periodic(
-      m_mainStick.getRawAxis(0), //REPLACE
+      m_mainStick.getRawAxis(1), //REPLACE
       m_mainStick.getRawAxis(0), 
-      m_mainStick.getRawAxis(0));
+      m_codriverStick.getRawAxis(0));
   }
 
 }

@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.Port;
 import frc.robot.Constants.RobotConstants;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.Constants.TransportConstants;
@@ -55,10 +56,17 @@ public abstract class DriveTrain extends SubsystemBase {
     );
 
     m_modules = new SwerveModule[4]; // FIX PORTS
-    m_modules[0] = initializeModule(1, 1, 1); //fl
-    m_modules[1] = initializeModule(2, 2, 2); //fr
-    m_modules[2] = initializeModule(3, 3, 3); //bl
-    m_modules[3] = initializeModule(4, 4, 4); //br
+    m_modules[0] = initializeModule(Port.FRONT_LEFT_DRIVE_MOTOR, Port.FRONT_LEFT_STEER_MOTOR, Port.FRONT_LEFT_CODER); //fl
+    m_modules[1] = initializeModule(Port.FRONT_RIGHT_DRIVE_MOTOR, Port.FRONT_RIGHT_STEER_MOTOR, Port.FRONT_RIGHT_CODER); //fr
+    m_modules[2] = initializeModule(Port.BACK_LEFT_DRIVE_MOTOR, Port.BACK_LEFT_STEER_MOTOR, Port.BACK_LEFT_CODER); //bl
+    m_modules[3] = initializeModule(Port.BACK_RIGHT_DRIVE_MOTOR, Port.BACK_RIGHT_STEER_MOTOR, Port.BACK_RIGHT_CODER); //br
+
+    m_module_states = new SwerveModuleState[] {
+      new SwerveModuleState(),
+      new SwerveModuleState(),
+      new SwerveModuleState(),
+      new SwerveModuleState()
+    };
 
     setupDashboard();
   }
@@ -101,7 +109,7 @@ public abstract class DriveTrain extends SubsystemBase {
     //fix weird change over time shenanigans
     chassis_speeds = discretize_chassis_speeds(chassis_speeds);
 
-    m_module_states = (m_kinematics.toSwerveModuleStates(chassis_speeds));
+    m_module_states = m_kinematics.toSwerveModuleStates(chassis_speeds);
 
     //change target wheel directions if the wheel has to rotate more than 90*
     for (int i = 0; i < m_module_states.length; i++){
@@ -112,6 +120,7 @@ public abstract class DriveTrain extends SubsystemBase {
     SwerveDriveKinematics.desaturateWheelSpeeds(m_module_states, SwerveConstants.MAX_SPEED); 
 
     setModules(m_module_states);
+
   }
 
   /**
@@ -254,8 +263,9 @@ public abstract class DriveTrain extends SubsystemBase {
     for (SwerveModule module : m_modules){
       module.update();
     }
-
     publishAdv();
+
+    SmartDashboard.putNumber("vibe check", Math.random());
   }
 
   @Override

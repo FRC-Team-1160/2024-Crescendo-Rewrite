@@ -32,11 +32,16 @@ public class DriveTrainRealIO extends DriveTrain {
   }
 
   public Rotation2d getGyroAngle(){
-    return Rotation2d.fromDegrees(-m_gyro.getAngle()); //gyro reports CW positive, negate to return CCW positive
+    if (m_gyro != null){
+      return Rotation2d.fromDegrees(-m_gyro.getAngle()); //gyro reports CW positive, negate to return CCW positive
+    } else {
+      return new Rotation2d();
+    }
   }
 
   @Override
   public void periodic() {
+    super.periodic();
   }
 
   @Override

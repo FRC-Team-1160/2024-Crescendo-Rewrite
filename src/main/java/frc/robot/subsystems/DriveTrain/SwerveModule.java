@@ -29,6 +29,8 @@ public abstract class SwerveModule {
   public SwerveModule(){
 
     target_state = new SwerveModuleState();
+    angle_pid = new PIDController(1, 0.0, 0.0);
+    angle_pid.enableContinuousInput(-0.5, 0.5);
 
   }
 

@@ -13,6 +13,7 @@ import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.util.function.BooleanConsumer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
@@ -73,7 +74,7 @@ public class SubsystemManager {
         if (Robot.isSimulation()){
             
         } else {
-            m_drive = new DriveTrainRealIO();
+            this.m_drive = new DriveTrainRealIO();
             m_intake = new IntakeRealIO();
             m_transport = new TransportRealIO();
             m_shooter = new ShooterRealIO();
@@ -98,6 +99,8 @@ public class SubsystemManager {
 
         commands = new Commands();
 
+        setupDashboard();
+
     }
 
     public void setupDashboard(){
@@ -116,9 +119,9 @@ public class SubsystemManager {
 
         note_stored = m_transport.note_stored;
 
-        double drive_x = stick_x * SwerveConstants.MAX_SPEED;
-        double drive_y = stick_y * SwerveConstants.MAX_SPEED;
-        double drive_a = stick_a;
+        double drive_x = stick_x; //* SwerveConstants.MAX_SPEED;
+        double drive_y = stick_y; //* SwerveConstants.MAX_SPEED;
+        double drive_a = stick_a * 0.25;
 
         switch(drive_state){
             case AIMING_SPEAKER:
@@ -140,6 +143,8 @@ public class SubsystemManager {
             case FULL_CONTROL:
 
         }
+
+        SmartDashboard.putNumber("drive_x", drive_x);
         m_drive.setSwerveDrive(drive_x, drive_y, drive_a);
 
         switch(shoot_state){
@@ -165,7 +170,7 @@ public class SubsystemManager {
         public Command aimSpeaker(){
             return new FunctionalCommand(
                 () -> drive_state = DriveState.AIMING_SPEAKER, 
-                null,
+                () -> {},
                 canceled -> {if (canceled) drive_state = DriveState.FULL_CONTROL;}, 
                 () -> drive_state != DriveState.AIMING_SPEAKER);
         }
@@ -173,9 +178,17 @@ public class SubsystemManager {
         public Command aimNote(){
             return new FunctionalCommand(
                 () -> {if (tracked_note != null) drive_state = DriveState.AIMING_NOTE;}, 
-                null,
+                () -> {},
                 canceled -> {if (canceled) drive_state = DriveState.FULL_CONTROL;}, 
                 () -> drive_state != DriveState.AIMING_NOTE || tracked_note == null);
+        }
+
+        public Command rev(){
+            return new FunctionalCommand(
+                () -> m_shooter.setSpeed(1000), 
+                () -> {}, 
+                canceled -> {if (canceled) m_shooter.setSpeed(0);}, 
+                () -> false);
         }
 
         public Command shoot(){
@@ -183,7 +196,7 @@ public class SubsystemManager {
                 () -> {
                     shoot_state = ShootState.SHOOTING;
                     m_transport.transportOn();},
-                null, 
+                () -> {}, 
                 interrupted -> {
                     if (interrupted) shoot_state = ShootState.OFF;
                     m_transport.transportOff();}, 
@@ -194,7 +207,7 @@ public class SubsystemManager {
         public Command intake(){
             return new FunctionalCommand(
                 () -> m_intake.setSolenoidValue(DoubleSolenoid.Value.kForward),
-                null, 
+                () -> {}, 
                 (interrupted) -> m_intake.setSolenoidValue(null), 
                 () -> !note_stored);
         }

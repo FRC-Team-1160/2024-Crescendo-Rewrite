@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.Port;
 
 public class TransportRealIO extends Transport {
 
@@ -26,9 +27,9 @@ public class TransportRealIO extends Transport {
 
   /** Creates a new ExampleSubsystem. */
   public TransportRealIO() { //FILL IN ID CONSTANTS
-    l_wheel = new CANSparkMax(0, CANSparkLowLevel.MotorType.kBrushless);
-    r_wheel = new CANSparkMax(0, CANSparkLowLevel.MotorType.kBrushless);
-    m_belt = new CANSparkMax(0, CANSparkLowLevel.MotorType.kBrushless);
+    l_wheel = new CANSparkMax(Port.TRANSPORT_LEFT_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
+    r_wheel = new CANSparkMax(Port.TRANSPORT_RIGHT_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
+    m_belt = new CANSparkMax(Port.TRANSPORT_BELT_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
   }
 
   public void setWheels(double volts){

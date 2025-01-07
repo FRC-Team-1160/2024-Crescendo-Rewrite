@@ -23,6 +23,7 @@ public abstract class Shooter extends SubsystemBase {
     pitch_pid = new PIDController(3.5, 50.0, 0); //MOVE TO CONSTANTS
     pitch_pid.setIntegratorRange(-0.005, 0.005);
     pitch_pid.setIZone(0.02);
+    pitch_pid.setSetpoint(getPitch());
   }
 
   /**

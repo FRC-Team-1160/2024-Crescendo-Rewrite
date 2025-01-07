@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.Port;
 
 public class ClimberRealIO extends Climber {
 
@@ -25,16 +26,16 @@ public class ClimberRealIO extends Climber {
   public ClimberRealIO() {
     l_switch = new DigitalInput(0);
     r_switch = new DigitalInput(1);
-    l_motor = new CANSparkMax(0, CANSparkLowLevel.MotorType.kBrushless); //ADD PORTS
-    r_motor = new CANSparkMax(0, CANSparkLowLevel.MotorType.kBrushless);
+    l_motor = new CANSparkMax(Port.CLIMBER_LEFT_MOTOR, CANSparkLowLevel.MotorType.kBrushless); //ADD PORTS
+    r_motor = new CANSparkMax(Port.CLIMBER_RIGHT_MOTOR, CANSparkLowLevel.MotorType.kBrushless);
   }
 
   public void setLeftMotor(double speed){
-    l_motor.setVoltage(speed);
+    // l_motor.setVoltage(speed);
   }
 
   public void setRightMotor(double speed){
-    r_motor.setVoltage(speed);
+    // r_motor.setVoltage(speed);
   }
 
   public boolean getLeftSwitch(){
