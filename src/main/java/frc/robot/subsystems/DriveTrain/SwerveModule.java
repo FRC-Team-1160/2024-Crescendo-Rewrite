@@ -43,7 +43,8 @@ public abstract class SwerveModule {
     double target_angle = target_state.angle.getRadians();
     double a = angle_pid.calculate(getAngle().getRadians(), target_angle);
     if (Math.abs(getAngle().getRadians() - target_angle) > 0.005){
-        setSteer(-a);
+      SmartDashboard.putNumber("voltage", a);
+        // setSteer(-a);
     } else {
         setSteer(0);
     }

@@ -31,22 +31,26 @@ public class SwerveModuleRealIO extends SwerveModule{
   public CANcoder steer_sensor;
 
   public SwerveModuleRealIO(int drive_port, int steer_port, int sensor_port){
-    drive_motor = new TalonFX(drive_port);
-    steer_motor = new TalonFX(steer_port);
-    steer_sensor = new CANcoder(sensor_port);
+    drive_motor = new TalonFX(drive_port, "CANivore");
+    steer_motor = new TalonFX(steer_port, "CANivore");
+    steer_sensor = new CANcoder(sensor_port, "CANivore");
 
     Slot0Configs driveConfigs = new Slot0Configs();
-    driveConfigs.kV = DriveMotorConfigs.kV;
     driveConfigs.kP = DriveMotorConfigs.kP;
     driveConfigs.kI = DriveMotorConfigs.kI;
     driveConfigs.kD = DriveMotorConfigs.kD;
+    driveConfigs.kS = DriveMotorConfigs.kS;
+    driveConfigs.kV = DriveMotorConfigs.kV;
+    driveConfigs.kA = DriveMotorConfigs.kA;
     drive_motor.getConfigurator().apply(driveConfigs);
 
     Slot0Configs steerConfigs = new Slot0Configs();
-    steerConfigs.kV = SteerMotorConfigs.kV;
     steerConfigs.kP = SteerMotorConfigs.kP;
     steerConfigs.kI = SteerMotorConfigs.kI;
     steerConfigs.kD = SteerMotorConfigs.kD;
+    steerConfigs.kS = SteerMotorConfigs.kS;
+    steerConfigs.kV = SteerMotorConfigs.kV;
+    steerConfigs.kA = SteerMotorConfigs.kA;
     steer_motor.getConfigurator().apply(steerConfigs);
 
   }
@@ -76,12 +80,13 @@ public class SwerveModuleRealIO extends SwerveModule{
   }
 
   public void setDrive(double speedMetersPerSecond){
-    SmartDashboard.putNumber("in_speed", speedMetersPerSecond / SwerveConstants.WHEEL_ROTOR_TO_METERS);
-    drive_motor.setControl(new VelocityVoltage(speedMetersPerSecond / SwerveConstants.WHEEL_ROTOR_TO_METERS));
+    SmartDashboard.putNumber("in_speed", speedMetersPerSecond / SwerveConstants.WHEEL_ROTOR_IN_METERS);
+    // drive_motor.setControl(new VelocityVoltage(speedMetersPerSecond / SwerveConstants.WHEEL_ROTOR_TO_METERS));
   }
 
   public void setSteer(double volts){
-    steer_motor.setVoltage(volts);
+    steer_motor.set(0.0);
+    // steer_motor.setVoltage(volts);
   }
 
 }

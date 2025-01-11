@@ -117,20 +117,25 @@ public final class Constants {
     public static final double GEAR_RATIO = 6.75;
     public static final double MAX_SPEED = 4.5;
 
-    public static final double WHEEL_ROTOR_TO_METERS = GEAR_RATIO / WHEEL_DIAMETER;
+    public static final double WHEEL_ROTOR_IN_METERS = WHEEL_DIAMETER / GEAR_RATIO;
 
     public static class DriveMotorConfigs {
-      public static final double kV = 2.0;
-      public static final double kP = 1.0;
-      public static final double kI = 0.0;
-      public static final double kD = 10.0;
+      public static final double kP = 0.05; 
+      public static final double kI = 0;
+      public static final double kD = 0;
+      public static final double kS = 0.10;
+      public static final double kV = 0.12; 
+      public static final double kA = 0;
     }
 
     public static class SteerMotorConfigs {
-      public static final double kV = 0.0;
       public static final double kP = 0.05;
       public static final double kI = 0.01;
       public static final double kD = 0.005;
+      public static final double kS = 0;
+      public static final double kV = 0;
+      public static final double kA = 0;
+
     }
   }
 
